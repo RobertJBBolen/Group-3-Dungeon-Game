@@ -1,6 +1,15 @@
 import random
 from colors import * #for coloring the text
 from enemies import * #mainly for enemy data, and to spawn random enemy in the dungeon floors
+#GROUP MEMBERS:
+#Bolen, Robert JB B.
+#Diomes, Danny
+#Dizon, Adrian Kier
+#Montes, Daniel
+#Macaranas, Daisy Anne
+#Selidio, Bea Bianca
+#Viernes, Alexander
+
 
 # DATA DICTIONARIES
 ROLES = { 

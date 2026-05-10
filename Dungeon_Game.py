@@ -57,7 +57,7 @@ SHOP_LIMITS = {
     "Iron Armor": 0
 }
 
-MAX_LIMIT = 3
+MAX_LIMIT = 5
 
 # FUNCTIONS 
 
@@ -68,7 +68,19 @@ def display_stats():
         if stat == "hp":
             print(f"Hp: {player['hp']}/{player['max_hp']}")
         elif stat == "Inventory":
-            print(f"Inventory: {', '.join(player['Inventory']) if player['Inventory'] else 'Empty'}")
+            if not player["Inventory"]:
+                print("Inventory: Empty")
+            else:
+                item_counts = []
+                unique_items = []
+                for item in player["Inventory"]:
+                    if item not in unique_items:
+                        count = player["Inventory"].count(item)
+                        item_counts.append(f"{item}: x{count}")
+                        unique_items.append(item)
+                    
+                print(f"Inventory: {' | '.join(item_counts)}")
+
         elif stat != "max_hp":
             print(f"{stat.capitalize()}: {value}")
 
@@ -86,33 +98,44 @@ def choose_role():
         print("Invalid choice!")
 
 def use_inventory():
-    print(f"\n{BLUE}===== Your Inventory ====={RESET}")
-    if not player["Inventory"]:
-        print("Your backpack is empty")
-        return
-    
-    print(f"Items: {player['Inventory']}")
-    use_item = input("Type the name of the item to use(or type 'exit'): ").title()
+    while True:
+        print(f"\n{BLUE}===== Your Inventory ====={RESET}")
+        if not player["Inventory"]:
+            print("Your backpack is empty")
+            break
+        #to print the items like "Item: x<count>" 
+        shown_items = []
+        print("Items in your Inventory:")
+        for item in player["Inventory"]:
+            if item not in shown_items:
+                count = player["Inventory"].count(item)
+                print(f"- {item}: x{count}")
+                shown_items.append(item)
 
-    if use_item in player["Inventory"]:
-        # Remove the item first
-        player["Inventory"].remove(use_item)
+        use_item = input("Type the name of the item to use(or type 'exit'): ").title()
 
-        # Simple effects
-        if use_item == "Health Potion":
-            player["hp"] = min(player["max_hp"], player["hp"] + 40)
-            print(f"{GREEN}Used Health Potion! HP is now {player['hp']}{RESET}")
-        
-        elif use_item == "Iron Sword":
-            player["atk"] += 5
-            print(f"{CYAN}Equipped Iron Sword! ATK increased!{RESET}")
-        
-        elif use_item == "Iron Armor":
-            player["def"] += 2
-            print(f"{CYAN}Equipped Iron Armor! DEF increased!{RESET}")        
-    else:
-        if use_item != "Exit":
-            print("You don't have that item.")
+        if use_item == "Exit":
+            break
+
+        if use_item in player["Inventory"]:
+            # Remove the item first
+            player["Inventory"].remove(use_item)
+
+            # Simple effects
+            if use_item == "Health Potion":
+                player["hp"] = min(player["max_hp"], player["hp"] + 40)
+                print(f"{GREEN}Used Health Potion! HP is now {player['hp']}{RESET}")
+            
+            elif use_item == "Iron Sword":
+                player["atk"] += 5
+                print(f"{CYAN}Equipped Iron Sword! ATK increased!{RESET}")
+            
+            elif use_item == "Iron Armor":
+                player["def"] += 2
+                print(f"{CYAN}Equipped Iron Armor! DEF increased!{RESET}")        
+        else:
+            if use_item != "Exit":
+                print("You don't have that item.")
 
 #function for shop 
 def shop():
@@ -180,7 +203,6 @@ def battle(enemy_name, stats_dict):
     enemy_def = stats_dict[enemy_name]["def"]
     enemy_gold = stats_dict[enemy_name]["gold"]
     enemy_skill = stats_dict[enemy_name]["skill"]
-    enemy_loot = stats_dict[enemy_name]["loot"]
 
     # Combat States 
     is_blocking = False

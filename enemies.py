@@ -10,7 +10,7 @@ ENEMY_STATS = {
         "gold": 10,
         "loot": "Health Potion"
     },
-     "Slime": {
+    "Slime": {
         "hp": 40,
         "atk": 8,
         "def": 2,
@@ -18,7 +18,7 @@ ENEMY_STATS = {
         "gold": 20,
         "loot": "Health Potion"
     },
-     "Orc": {
+    "Orc": {
         "hp": 50,
         "atk": 15,
         "def": 10,
@@ -26,7 +26,7 @@ ENEMY_STATS = {
         "gold": 40,
         "loot": "Health Potion"
     },
-     "Wolf": {
+    "Wolf": {
         "hp": 40,
         "atk": 10,
         "def": 2,
@@ -34,7 +34,7 @@ ENEMY_STATS = {
         "gold": 30,
         "loot": "Health Potion"
     },
-     "Ogre": {
+    "Ogre": {
         "hp": 60,
         "atk": 15,
         "def": 10,
